@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DropzoneArea } from "material-ui-dropzone";
 import { saveAs } from "file-saver";
-import { upload } from "@testing-library/user-event/dist/upload";
+import ApiServices from "./ApiServices";
+import axios from "axios";
 
 const FileUploadDownload = (props) => {
+
     const {profiles, setShowUploadOption} = props
     const [files, setFiles] = useState([])
     const [profile, setProfile] = useState([])
@@ -30,31 +32,47 @@ const FileUploadDownload = (props) => {
       };
 
       const uploadFileData = (e) => {
-		setUpload({file:e, msg: ''});
+        setUpload({file: e,msg: "File successfully uploaded"});
+        axios.post('http://localhost:3000',upload)
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((ex) => {
+            console.log(ex);
+        });
 
-		let data = new FormData();
-		data.append('file', upload);
+		// setUpload({file:e, msg: ''});
 
-		fetch('http://localhost:3000', {
-            mode: 'cors',
-			method: 'POST',
-			body: data
-		}).then(response => {
-			setUpload({file: e,msg: "File successfully uploaded"});
-		}).catch(err => {
-			setUpload({error: err});
-		});
+		// let data = new FormData();
+		// data.append('file', upload);
+
+		// fetch('http://localhost:3000', {
+        //     mode: 'cors',
+		// 	method: 'POST',
+		// 	body: data
+		// }).then(response => {
+		// 	setUpload({file: e,msg: "File successfully uploaded"});
+		// }).catch(err => {
+		// 	setUpload({error: err});
+		// });
 
 	}
 
     const showFile = () => {
-        fetch('http://localhost:3000', {
-			method: 'GET'
-		}).then(response => {
-			setShowFiles(response.data)
-		}).catch(err => {
-			setShowFiles({err})
-		});
+        axios.get('http://localhost:3000')
+        .then((response) => {
+            setShowFiles(response.data)
+        })
+        .catch((ex) => {
+            console.log(ex);
+        });
+        // fetch('http://localhost:3000', {
+		// 	method: 'GET'
+		// }).then(response => {
+		// 	setShowFiles(response.data)
+		// }).catch(err => {
+		// 	setShowFiles({err})
+		// });
     }
 
     const handleSave = (e) => {
