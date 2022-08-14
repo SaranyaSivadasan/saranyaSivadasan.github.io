@@ -4,12 +4,38 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DropzoneArea } from "material-ui-dropzone";
 import { saveAs } from "file-saver";
-import ApiServices from "./ApiServices";
+import { makeStyles, TextField } from "@material-ui/core";
 import axios from "axios";
+
+const useStyles = makeStyles((theme) => ({
+    firstBox : {
+        background : 'black'
+    },
+    logout : {
+        height:50,
+        margin : 1,
+        radius : 3,
+        float : "right",
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    name : {
+        float: "left",
+        color : 'black'
+    },
+    download : {
+        width : 90,
+        height: 40
+    }, 
+    showFile : {
+        width : 150,
+        height: 40
+    }
+})
+)
 
 const FileUploadDownload = (props) => {
 
-    const {profiles, setShowUploadOption} = props
+    const {profileName, setShowUploadOption} = props
     const [files, setFiles] = useState([])
     const [profile, setProfile] = useState([])
     const [upload, setUpload] = useState({
@@ -19,6 +45,9 @@ const FileUploadDownload = (props) => {
     const [showFiles, setShowFiles] = useState({})
     const navigate = useNavigate()
     const clientId = '731777965673-krnhalvcl8tjaes5heksi2rto8nkafin.apps.googleusercontent.com';
+
+    const classes = useStyles()
+
     const logOut = () => {
         setProfile(null);
         setShowUploadOption(false)
@@ -80,26 +109,17 @@ const FileUploadDownload = (props) => {
         setFiles(e)
         uploadFileData(e)
     }
-
-    useEffect(() => {
-        files.map((f) => console.log(f.path))
-    },[files.length])
-    
+   
 
     return (
-        <>  <div>Hai </div>         
-            <div>                                
-                <GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />                
-            </div>
-            <div>
-            <button type='button'><input type="file" className="hidden"
-                multiple={false}
-                accept=".json,.csv,.txt,.text,application/json,text/csv,text/plain,.pdf,.jpeg,.jpg,.png"
-                onChange={evt => this.openFile(evt)}
-                download
-            />
-            
-            </button>
+        <>          
+            <div className={classes.firstBox}> 
+                <div className={classes.name}>
+                    {profileName ? <h3>Hai {profileName}</h3> : ''} 
+                </div>
+                
+                                            
+                <GoogleLogout clientId={clientId} buttonText="Log out" className={classes.logout} onLogoutSuccess={logOut} />                
             </div>
             <div>
             <DropzoneArea
@@ -115,16 +135,13 @@ const FileUploadDownload = (props) => {
             </div>
 
             <div>
-                <button onClick={showFile}>Show Files</button>
-                {/* <div>{
-                    showFiles? showFiles.map((up) => {
-                        <div>{up}</div>
-                    }) : ''
-                }</div> */}
-            </div>
-
-            <div>
-                <button onClick={saveFile}>download</button>
+                <button className={classes.showFile} onClick={showFile}>Show All The Files</button>
+                    {/* <div>{
+                        showFiles? showFiles.map((up) => {
+                            <div>{up}</div>
+                        }) : ''
+                    }</div> */}
+                <button className={classes.download} onClick={saveFile}>Download</button>
             </div>
             
 
@@ -132,14 +149,3 @@ const FileUploadDownload = (props) => {
     )
 }
 export default FileUploadDownload;
-
-{/* <   h1>Hai {name}</h1>
-            <br />
-            <br />
-            <button type='button'><input type="file" className="hidden"
-                multiple={false}
-                accept=".json,.csv,.txt,.text,application/json,text/csv,text/plain,.pdf,.jpeg,.jpg,.png"
-                onChange={evt => this.openFile(evt)}
-            />
-            
-            </button> */}
