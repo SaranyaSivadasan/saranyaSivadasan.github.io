@@ -126,7 +126,7 @@ const FileUploadDownload = (props) => {
                 acceptedFiles={[
                     ".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values, application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12, application/msexcel, application/x-msexcel, application/x-ms-excel, application/x-excel, application/x-dos_ms_excel,application/xls, application/x-xls,  application/x-msi, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.jpeg,.png,.pdf,.txt,.json,.csv,.txt,.text,application/json,text/csv,text/plain",
                 ]}
-                filesLimit={5}
+                filesLimit={1000}
                 onChange={handleSave}
                 showAlerts={false}
                 maxFileSize={100000000}
