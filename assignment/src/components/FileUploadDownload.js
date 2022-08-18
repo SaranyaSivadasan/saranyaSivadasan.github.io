@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { GoogleLogout } from "react-google-login";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DropzoneArea } from "material-ui-dropzone";
 import { saveAs } from "file-saver";
-import { makeStyles, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +37,6 @@ const FileUploadDownload = (props) => {
 
     const {profileName, setShowUploadOption} = props
     const [files, setFiles] = useState([])
-    const [profile, setProfile] = useState([])
     const [upload, setUpload] = useState({
         file : '',
         msg : ''
@@ -49,7 +48,6 @@ const FileUploadDownload = (props) => {
     const classes = useStyles()
 
     const logOut = () => {
-        setProfile(null);
         setShowUploadOption(false)
         navigate("/")
     };
@@ -105,7 +103,6 @@ const FileUploadDownload = (props) => {
     }
 
     const handleSave = (e) => {
-        console.log(e)
         setFiles(e)
         uploadFileData(e)
     }

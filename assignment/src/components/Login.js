@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect,useState } from "react";
 import GoogleLogin from "react-google-login";
-import { gapi } from "gapi-script";
+import { gapi } from "gapi-script"; //initialize our clientId using gapi, which is Google’s client library for browser-side JavaScript. It is a package that helps us load gapi scripts and initialize functions
 import FileUploadDownload from "./FileUploadDownload";
 import { makeStyles } from "@material-ui/core";
 
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const clientId = '731777965673-krnhalvcl8tjaes5heksi2rto8nkafin.apps.googleusercontent.com';
-    const [profile, setProfile] = useState([])
     const [showUploadOption, setShowUploadOption] = useState(false)
     const profileDetails = React.useRef({ value : {} });
 
@@ -39,9 +38,7 @@ const Login = () => {
 
 
   const onSuccess = (res) => {
-    setProfile(res.profileObj)
     profileDetails.current.value = res.profileObj
-    console.log("res.profileObj",res.profileObj)
     setShowUploadOption(true)
   };
   const onFailure = (err) => {
@@ -58,7 +55,7 @@ return (
                 <div>
                   <div>
                     <h2>Welcome To Your File Collection!!!</h2>
-                    <p>Here you can upload and download umlimited files...</p>
+                    <p>Here you can upload and download unlimited files...</p>
                   </div>
                   <div>
                     <GoogleLogin
